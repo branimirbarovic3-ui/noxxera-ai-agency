@@ -1,0 +1,7 @@
+{
+  "name": "Noxxera AI Agency",
+  "description": "A high-performance landing page for Noxxera AI, a voice AI integration agency. Features a live voice AI demo, modern dark aesthetic, and conversion-focused sections.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
