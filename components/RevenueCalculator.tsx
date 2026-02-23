@@ -2,48 +2,32 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const RevenueCalculator: React.FC = () => {
-  // Calculation inputs with realistic defaults
-  const [callsPerDay, setCallsPerDay] = useState<number>(50);
+  // Inputs: daily calls, missed %, avg deal value
+  const [dailyCalls, setDailyCalls] = useState<number>(50);
   const [missedPercentage, setMissedPercentage] = useState<number>(25);
-  const [avgOrderValue, setAvgOrderValue] = useState<number>(45);
-  const [closingRate, setClosingRate] = useState<number>(20);
-  const [daysOpen, setDaysOpen] = useState<number>(30);
+  const [avgOrderValue, setAvgOrderValue] = useState<number>(250);
+  const [daysOpen, setDaysOpen] = useState<number>(20);
 
-  // Display result with animation
-  const [displayResult, setDisplayResult] = useState<number>(0);
-  const animationRef = useRef<number | null>(null);
+  // States
+  const [monthlyLoss, setMonthlyLoss] = useState<number>(0);
+  const [annualLoss, setAnnualLoss] = useState<number>(0);
+  const [dailyLoss, setDailyLoss] = useState<number>(0);
+  const [showAudit, setShowAudit] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
 
-  // Use closing rate in the calculation
-  const potentialLeadsMissed = (callsPerDay * (missedPercentage / 100)) * daysOpen;
-  const calculatedLoss = potentialLeadsMissed * (closingRate / 100) * avgOrderValue;
+  // Calculations
+  const calculatedMonthly = dailyCalls * (missedPercentage / 100) * avgOrderValue * daysOpen;
+  const calculatedAnnual = calculatedMonthly * 12;
+  const calculatedDaily = calculatedMonthly / daysOpen;
 
   useEffect(() => {
-    // Simple count-up/down animation
-    const startValue = displayResult;
-    const endValue = calculatedLoss;
-    const duration = 500;
-    const startTime = performance.now();
-
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Easing function
-      const easeOutQuad = (t: number) => t * (2 - t);
-      const current = startValue + (endValue - startValue) * easeOutQuad(progress);
-
-      setDisplayResult(current);
-
-      if (progress < 1) {
-        animationRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, [calculatedLoss]);
+    // Smooth transition for numbers
+    setMonthlyLoss(calculatedMonthly);
+    setAnnualLoss(calculatedAnnual);
+    setDailyLoss(calculatedDaily);
+  }, [calculatedMonthly, calculatedAnnual, calculatedDaily]);
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -53,279 +37,178 @@ const RevenueCalculator: React.FC = () => {
     }).format(val);
   };
 
-  const [showForm, setShowForm] = useState<boolean>(false);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  const handleEmailCapture = async (e: React.FormEvent) => {
+  const handleAuditRequest = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const annualLossValue = displayResult * 12;
-
-    const formattedAnalysis = `
-🔴 CRITICAL REVENUE LEAK IDENTIFIED FOR: ${email}
-==================================================
-
-I. EXECUTIVE SUMMARY: THE "SILENT KILLER"
------------------------------------------
-Your current business infrastructure is failing to capture approximately ${Math.round(potentialLeadsMissed)} high-intent leads every single month.
-
-II. FINANCIAL IMPACT ANALYSIS
------------------------------
-• MONTHLY REVENUE SINKHOLE: ${formatCurrency(displayResult)}
-• ANNUAL CAPITAL DRAIN: ${formatCurrency(annualLossValue)}
-
-III. DATA BREAKDOWN:
-• Daily Calls: ${callsPerDay}
-• Missed Rate: ${missedPercentage}%
-• Closing Rate: ${closingRate}%
-• Deal Value: ${formatCurrency(avgOrderValue)}
-
-IV. SOLUTION: 
-Noxxera AI agents deploy a zero-latency response system that eliminates this leak entirely.
-    `.trim();
-
     const payload = {
       email,
-      monthlyLoss: displayResult,
-      annualLoss: annualLossValue,
-      leadsMissed: Math.round(potentialLeadsMissed),
-      closingRate: closingRate,
-      formattedAnalysis: formattedAnalysis,
-      calculationData: {
-        dailyCalls: callsPerDay,
-        missedRate: missedPercentage,
-        avgLeadValue: avgOrderValue,
-        operatingDays: daysOpen
+      metrics: {
+        dailyLoss: formatCurrency(dailyLoss),
+        monthlyLoss: formatCurrency(monthlyLoss),
+        annualLoss: formatCurrency(annualLoss)
       },
-      auditTime: new Date().toISOString()
+      infrastructure: {
+        volume: dailyCalls,
+        leakage: `${missedPercentage}%`,
+        dealValue: formatCurrency(avgOrderValue)
+      },
+      timestamp: new Date().toISOString(),
+      type: "Enterprise Revenue Audit"
     };
 
     try {
-      const response = await fetch('https://brano1957.app.n8n.cloud/webhook/missed-call-revenue', {
+      await fetch('https://brano1957.app.n8n.cloud/webhook/missed-call-revenue', {
         method: 'POST',
         mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-      } else {
-        console.error("Webhook failed:", response.statusText);
-        alert("Something went wrong. Please try again.");
-      }
+      setIsSubmitted(true);
     } catch (err) {
-      console.error("Webhook error:", err);
-      alert("Connection error. Please try again.");
+      console.error("Audit submission failed", err);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section className="py-48 px-6 relative">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase leading-[1.2]">
-            HOW MUCH REVENUE IS YOUR <span className="text-primary italic">MISSED CALL VOLUME COSTING?</span>
-          </h2>
-          <p className="text-lg md:text-xl text-[#99A1AF] font-medium max-w-2xl mx-auto leading-relaxed">
-            High-volume businesses miss 20–40% of inbound calls during peak demand. Missed calls = lost revenue. Calculate your potential recovery below.
+    <section className="py-32 px-6 bg-black text-white" id="diagnostic">
+      <div className="max-w-6xl mx-auto">
+        {/* Header: McKinsey Style */}
+        <div className="mb-20 border-l border-primary pl-8">
+          <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary mb-4">Diagnostic Tool</h2>
+          <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-none uppercase">
+            Revenue Infrastructure <br /> <span className="text-white/40 italic">Audit</span>
+          </h1>
+          <p className="mt-6 text-[#9CA3AF] max-w-xl font-medium text-lg leading-relaxed">
+            Quantifying operational attrition through inbound demand leakage. Infrastructure either captures demand — or leaks it.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Controls Column */}
-          <div className="space-y-10 p-8 md:p-12 bg-white/5 backdrop-blur-md border border-[#282828] rounded-[40px]">
-            {/* Field: Calls Per Day */}
-            <div className="space-y-4">
-              <div className="flex justify-between items-end">
-                <label className="text-sm font-black uppercase tracking-widest text-white">Daily Call Volume</label>
-                <span className="text-2xl font-black text-primary italic">{callsPerDay}</span>
-              </div>
-              <input
-                type="range" min="10" max="1000" step="10"
-                value={callsPerDay}
-                onChange={(e) => setCallsPerDay(Number(e.target.value))}
-                className="w-full h-2 bg-[#282828] rounded-lg appearance-none cursor-pointer accent-primary"
-              />
-              <p className="text-xs font-bold text-[#555] uppercase tracking-wider">Total inbound inquiries, leads, and support requests</p>
-            </div>
-
-            {/* Field: Missed Percentage */}
-            <div className="space-y-4">
-              <div className="flex justify-between items-end">
-                <label className="text-sm font-black uppercase tracking-widest text-white">Unanswered Call Rate</label>
-                <span className="text-2xl font-black text-primary italic">{missedPercentage}%</span>
-              </div>
-              <input
-                type="range" min="0" max="100" step="1"
-                value={missedPercentage}
-                onChange={(e) => setMissedPercentage(Number(e.target.value))}
-                className="w-full h-2 bg-[#282828] rounded-lg appearance-none cursor-pointer accent-primary"
-              />
-              <p className="text-xs font-bold text-[#555] uppercase tracking-wider">Average missed call rate across high-demand periods</p>
-            </div>
-
-            {/* Field: Closing Rate */}
-            <div className="space-y-4">
-              <div className="flex justify-between items-end">
-                <label className="text-sm font-black uppercase tracking-widest text-white">Lead-to-Close Rate (%)</label>
-                <span className="text-2xl font-black text-primary italic">{closingRate}%</span>
-              </div>
-              <input
-                type="range" min="1" max="100" step="1"
-                value={closingRate}
-                onChange={(e) => setClosingRate(Number(e.target.value))}
-                className="w-full h-2 bg-[#282828] rounded-lg appearance-none cursor-pointer accent-primary"
-              />
-              <p className="text-xs font-bold text-[#555] uppercase tracking-wider">Percentage of leads that become paying customers</p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {/* Field: Avg Order Value */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          {/* Inputs: Left Side */}
+          <div className="lg:col-span-5 space-y-12">
+            <div className="space-y-8">
+              {/* Daily Calls */}
               <div className="space-y-4">
-                <label className="text-sm font-black uppercase tracking-widest text-white block">Average Lead Value ($)</label>
-                <input
-                  type="number"
-                  value={avgOrderValue}
-                  onChange={(e) => setAvgOrderValue(Number(e.target.value))}
-                  className="w-full bg-[#1A1A1A] border border-[#282828] text-white p-4 rounded-xl font-black focus:border-primary outline-none"
-                />
-                <p className="text-xs font-bold text-[#555] uppercase tracking-wider">Estimated revenue per successful call</p>
+                <div className="flex justify-between items-baseline">
+                  <label className="text-[10px] uppercase tracking-widest font-black text-white/40">Inbound Daily Volume</label>
+                  <span className="text-2xl font-black text-white">{dailyCalls} calls</span>
+                </div>
+                <input type="range" min="10" max="500" step="5" value={dailyCalls} onChange={(e) => setDailyCalls(Number(e.target.value))} className="w-full h-1 bg-white/10 appearance-none cursor-pointer accent-primary" />
               </div>
 
-              {/* Field: Days Open */}
+              {/* Missed % */}
               <div className="space-y-4">
-                <label className="text-sm font-black uppercase tracking-widest text-white block">Monthly Operating Days</label>
-                <input
-                  type="number"
-                  value={daysOpen}
-                  onChange={(e) => setDaysOpen(Number(e.target.value))}
-                  className="w-full bg-[#1A1A1A] border border-[#282828] text-white p-4 rounded-xl font-black focus:border-primary outline-none"
-                />
-                <p className="text-xs font-bold text-[#555] uppercase tracking-wider">Number of active business days per month</p>
+                <div className="flex justify-between items-baseline">
+                  <label className="text-[10px] uppercase tracking-widest font-black text-white/40">Infrastructure Gap (Missed %)</label>
+                  <span className="text-2xl font-black text-white">{missedPercentage}%</span>
+                </div>
+                <input type="range" min="1" max="100" step="1" value={missedPercentage} onChange={(e) => setMissedPercentage(Number(e.target.value))} className="w-full h-1 bg-white/10 appearance-none cursor-pointer accent-primary" />
               </div>
+
+              {/* Avg Deal Value */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-baseline">
+                  <label className="text-[10px] uppercase tracking-widest font-black text-white/40">Average Contract Value</label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-white/20">$</span>
+                    <input type="number" value={avgOrderValue} onChange={(e) => setAvgOrderValue(Number(e.target.value))} className="bg-transparent text-right font-black text-2xl focus:outline-none w-32 border-b border-white/10 pb-1" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-8 opacity-20 text-[9px] uppercase tracking-[0.4em] font-medium border-t border-white/5">
+              Protocol: Zero Missed Opportunity Framework
             </div>
           </div>
 
-          {/* Result Column */}
-          <div className="lg:sticky lg:top-32 space-y-8">
-            <div className="bg-primary p-12 rounded-[40px] shadow-primary text-black transform hover:-rotate-1 transition-transform min-h-[450px] flex flex-col justify-center">
-              {!showForm ? (
-                <>
-                  <p className="text-xs font-black uppercase tracking-[0.3em] mb-4 opacity-70">Estimated Monthly Revenue Gap</p>
-                  <h3 className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-6">
-                    YOU ARE MISSING <br />
-                    <span className="italic underline underline-offset-8 decoration-4">{formatCurrency(displayResult)}</span>
-                  </h3>
-                  <p className="text-lg font-bold opacity-80 leading-snug mb-8">
-                    Every missed call is a missed opportunity. This represents {formatCurrency(displayResult * 12)} in annual revenue lost to operational bottlenecks.
-                  </p>
+          {/* Results: Right Side */}
+          <div className="lg:col-span-7">
+            {!showAudit ? (
+              <div className="bg-[#0A0A0A] border border-white/5 p-12 rounded-sm shadow-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-8 opacity-5">
+                  <svg width="120" height="120" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="48" stroke="white" strokeWidth="0.5" strokeDasharray="2 4" /></svg>
+                </div>
+
+                <h3 className="text-xs uppercase tracking-[0.4em] font-black text-primary mb-12">Analysis Summary</h3>
+
+                <div className="space-y-10">
+                  <div className="grid grid-cols-2 gap-8">
+                    <div>
+                      <p className="text-[10px] uppercase text-white/40 font-bold tracking-widest mb-2">Monthly Leakage</p>
+                      <p className="text-4xl font-black">{formatCurrency(monthlyLoss)}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase text-white/40 font-bold tracking-widest mb-2">Annual Projected Loss</p>
+                      <p className="text-4xl font-black text-white/60">{formatCurrency(annualLoss)}</p>
+                    </div>
+                  </div>
+
+                  <div className="p-8 bg-white/5 border border-white/10 rounded-sm">
+                    <p className="text-xs font-bold text-white/60 mb-2 uppercase tracking-widest">Immediate Urgency</p>
+                    <p className="text-xl font-medium">Based on your volume, you are losing approximately <span className="text-primary font-black underline underline-offset-4">{formatCurrency(dailyLoss)} per day.</span></p>
+                  </div>
+
                   <button
-                    onClick={() => setShowForm(true)}
-                    className="w-full bg-black text-white py-6 rounded-2xl font-black text-xl hover:scale-[1.02] active:scale-[0.98] transition-all uppercase tracking-tight"
+                    onClick={() => setShowAudit(true)}
+                    className="w-full bg-white text-black py-6 font-black text-sm uppercase tracking-[0.2em] hover:bg-primary transition-all duration-300"
                   >
-                    Get My Recovery Plan
+                    Generate Implementation Audit
                   </button>
-                </>
-              ) : !isSubmitted ? (
-                <form onSubmit={handleEmailCapture} className="animate-fade-in-up">
-                  <p className="text-xs font-black uppercase tracking-[0.3em] mb-4 opacity-70 text-black">Final Step</p>
-                  <h3 className="text-3xl md:text-4xl font-black tracking-tighter leading-tight mb-6 text-black">
-                    WHERE SHOULD WE SEND YOUR <span className="italic">ANALYSIS?</span>
-                  </h3>
+                </div>
+              </div>
+            ) : !isSubmitted ? (
+              <form onSubmit={handleAuditRequest} className="bg-[#0A0A0A] border border-white/5 p-12 rounded-sm animate-in fade-in slide-in-from-bottom-4">
+                <h3 className="text-xl font-bold mb-4 uppercase tracking-tighter">Access Full Infrastructure Audit</h3>
+                <p className="text-[#9CA3AF] text-sm mb-8 leading-relaxed">Enter your professional email to receive the Zero Missed Opportunity Framework and the 24/7 Capture Layer implementation roadmap.</p>
+
+                <div className="space-y-6">
                   <input
                     type="email"
                     required
-                    placeholder="Enter your work email"
+                    placeholder="Work Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-black/10 border-2 border-black/20 text-black p-5 rounded-2xl font-bold mb-6 placeholder:text-black/40 focus:border-black outline-none transition-colors"
+                    className="w-full bg-white/5 border border-white/10 p-5 font-bold focus:border-primary outline-none transition-all uppercase text-xs tracking-widest"
                   />
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-black text-white py-6 rounded-2xl font-black text-xl hover:scale-[1.02] active:scale-[0.98] transition-all uppercase tracking-tight flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Processing...
-                      </>
-                    ) : (
-                      'Send Recovery Plan'
-                    )}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowForm(false)}
-                    className="w-full text-black/60 font-black text-xs uppercase tracking-widest mt-4 hover:text-black transition-colors"
-                  >
-                    Back to calculation
-                  </button>
-                </form>
-              ) : (
-                <div className="text-center py-12 animate-scale-in">
-                  <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="text-3xl font-black text-black uppercase mb-4 tracking-tighter">Analysis Sent</h3>
-                  <p className="text-black font-bold opacity-80 mb-8 leading-snug">Check your inbox. We've sent a detailed breakdown of your {formatCurrency(displayResult)} recovery plan.</p>
-                  <button
-                    onClick={() => { setIsSubmitted(false); setShowForm(false); }}
-                    className="text-black/60 font-black text-xs uppercase tracking-widest hover:text-black"
-                  >
-                    Back to calculator
-                  </button>
-                </div>
-              )}
-            </div>
 
-            <div className="p-8 border border-[#282828] rounded-[40px] bg-white/5 backdrop-blur-md">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                  <button
+                    disabled={isSubmitting}
+                    className="w-full bg-primary text-black py-6 font-black text-sm uppercase tracking-[0.2em] flex items-center justify-center gap-4 hover:scale-[1.01] active:scale-[0.99] transition-all"
+                  >
+                    {isSubmitting ? 'Authenticating Protocol...' : 'Finalize Audit'}
+                  </button>
                 </div>
-                <p className="text-[#99A1AF] font-medium italic">
-                  "Modern prospects expect immediate responses. If they hit a busy signal, they move to the next competitor. Our AI ensures that never happens."
-                </p>
+              </form>
+            ) : (
+              <div className="bg-[#0A0A0A] border border-white/5 p-12 rounded-sm text-center py-20 animate-in zoom-in-95">
+                <div className="w-16 h-16 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center mx-auto mb-8">
+                  <div className="w-2 h-2 bg-primary animate-pulse"></div>
+                </div>
+                <h3 className="text-2xl font-black uppercase mb-4 tracking-tight">Audit Sent to Cloud</h3>
+                <p className="text-[#9CA3AF] text-sm mb-12 max-w-xs mx-auto">Your infrastructure gap analysis is being dispatched to {email}. Revenue Leakage Doesn’t Pause.</p>
+
+                <div className="pt-10 border-t border-white/5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Final Step Required</p>
+                  <h4 className="text-2xl font-black mb-4 uppercase tracking-tight italic">“Revenue Leakage Doesn’t Pause.”</h4>
+                  <p className="text-xs text-[#9CA3AF] mb-8 uppercase tracking-widest font-bold">Infrastructure either captures demand — or leaks it.</p>
+
+                  <a
+                    href="[CALENDLY_LINK]"
+                    target="_blank"
+                    className="inline-block bg-white text-black px-12 py-6 font-black text-sm uppercase tracking-[0.2em] hover:bg-primary transition-all"
+                  >
+                    Schedule Implementation Review
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
-
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        input[type=range]::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          height: 24px;
-          width: 24px;
-          border-radius: 50%;
-          background: #FFFFFF;
-          cursor: pointer;
-          margin-top: -8px; 
-          box-shadow: 0 0 10px rgba(191, 245, 73, 0.5);
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-          width: 100%;
-          height: 8px;
-          cursor: pointer;
-          background: #282828;
-          border-radius: 4px;
-        }
-        input[type=range]:focus::-webkit-slider-runnable-track {
-          background: #333333;
-        }
-      `}} />
     </section>
   );
 };
