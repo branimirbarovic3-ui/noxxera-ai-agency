@@ -73,21 +73,25 @@ const RevenueCalculator: React.FC = () => {
     };
 
     try {
+      console.log("Attempting to send to n8n test webhook...");
       const response = await fetch('https://brano1957.app.n8n.cloud/webhook-test/missed-call-revenue', {
         method: 'POST',
+        mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+
+      console.log("n8n Response Status:", response.status);
 
       if (response.ok) {
         setIsSubmitted(true);
       } else {
         console.error("Webhook failed:", response.statusText);
-        alert("Something went wrong. Please try again.");
+        alert(`n8n Error (${response.status}): Could not send data.`);
       }
     } catch (err) {
       console.error("Webhook error:", err);
-      alert("Connection error. Please check your internet and try again.");
+      alert("Connection error. Please ensure n8n is 'Listening' for the test event.");
     } finally {
       setIsSubmitting(false);
     }
