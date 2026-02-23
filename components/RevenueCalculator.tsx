@@ -57,6 +57,8 @@ const RevenueCalculator: React.FC = () => {
 
   const handleEmailCapture = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Form submit triggered!");
+    alert("Submitting to: " + email);
     setIsSubmitting(true);
 
     const payload = {
