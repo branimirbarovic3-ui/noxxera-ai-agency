@@ -53,9 +53,11 @@ const RevenueCalculator: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleEmailCapture = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const payload = {
       email,
@@ -70,24 +72,25 @@ const RevenueCalculator: React.FC = () => {
       auditTime: new Date().toISOString()
     };
 
-    console.log("Sending to n8n:", payload);
+    try {
+      const response = await fetch('https://brano1957.app.n8n.cloud/webhook-test/missed-call-revenue', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
 
-    /* 
-       ZA AKTIVACIJU: 
-       1. Napravi Webhook u n8n
-       2. Zameni URL ispod
-    */
-    // try {
-    //   await fetch('TVOJ_N8N_WEBHOOK_URL', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(payload)
-    //   });
-    // } catch (err) {
-    //   console.error("Webhook error:", err);
-    // }
-
-    setIsSubmitted(true);
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        console.error("Webhook failed:", response.statusText);
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      console.error("Webhook error:", err);
+      alert("Connection error. Please check your internet and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -198,9 +201,17 @@ const RevenueCalculator: React.FC = () => {
                   />
                   <button
                     type="submit"
-                    className="w-full bg-black text-white py-6 rounded-2xl font-black text-xl hover:scale-[1.02] active:scale-[0.98] transition-all uppercase tracking-tight"
+                    disabled={isSubmitting}
+                    className="w-full bg-black text-white py-6 rounded-2xl font-black text-xl hover:scale-[1.02] active:scale-[0.98] transition-all uppercase tracking-tight flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Send Recovery Plan
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      'Send Recovery Plan'
+                    )}
                   </button>
                   <button
                     type="button"
