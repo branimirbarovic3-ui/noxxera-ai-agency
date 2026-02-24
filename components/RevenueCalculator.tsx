@@ -53,10 +53,23 @@ const RevenueCalculator: React.FC = () => {
     }).format(val);
   };
 
+  const [industry, setIndustry] = useState<string>('General Service');
   const [showForm, setShowForm] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const industries = [
+    'HVAC & Plumbing',
+    'Legal Services',
+    'Real Estate',
+    'Dental & Medical',
+    'Automotive',
+    'Home Security',
+    'Solar & Energy',
+    'Roofing & Construction',
+    'General Service'
+  ];
 
   const handleEmailCapture = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,6 +80,8 @@ const RevenueCalculator: React.FC = () => {
     const formattedAnalysis = `
 🔴 CRITICAL REVENUE LEAK IDENTIFIED FOR: ${email}
 ==================================================
+
+INDUSTRY PROFILE: ${industry}
 
 I. EXECUTIVE SUMMARY: THE "SILENT KILLER"
 -----------------------------------------
@@ -89,6 +104,7 @@ Noxxera AI agents deploy a zero-latency response system that eliminates this lea
 
     const payload = {
       email,
+      industry,
       monthlyLoss: displayResult,
       annualLoss: annualLossValue,
       leadsMissed: Math.round(potentialLeadsMissed),
@@ -140,6 +156,24 @@ Noxxera AI agents deploy a zero-latency response system that eliminates this lea
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Controls Column */}
           <div className="space-y-10 p-8 md:p-12 bg-white/5 backdrop-blur-md border border-[#282828] rounded-[40px]">
+            {/* Field: Industry */}
+            <div className="space-y-4">
+              <label className="text-sm font-black uppercase tracking-widest text-white block">Target Industry</label>
+              <select
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+                className="w-full bg-[#1A1A1A] border border-[#282828] text-white p-4 rounded-xl font-black focus:border-primary outline-none appearance-none cursor-pointer"
+                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.5em' }}
+              >
+                {industries.map((ind) => (
+                  <option key={ind} value={ind} className="bg-[#1A1A1A]">
+                    {ind}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs font-bold text-[#555] uppercase tracking-wider">Select your business niche for industry-specific modeling</p>
+            </div>
+
             {/* Field: Calls Per Day */}
             <div className="space-y-4">
               <div className="flex justify-between items-end">
