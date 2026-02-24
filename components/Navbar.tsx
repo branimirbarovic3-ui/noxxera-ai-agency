@@ -9,7 +9,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 px-6 py-4 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-[#282828]' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 px-4 md:px-6 py-3 md:py-4 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-[#282828]' : 'bg-transparent'
         }`}
       role="navigation"
       aria-label="Main navigation"
@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
         <div className="flex items-center gap-2">
           <a
             href="#"
-            className="text-2xl font-black tracking-tighter text-white cursor-pointer hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black rounded"
+            className="text-lg md:text-2xl font-black tracking-tighter text-white cursor-pointer hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black rounded"
             aria-label="Noxxera AI Home"
           >
             NOXXERA <span className="text-primary">AI</span>
@@ -63,10 +63,10 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
             href="https://cal.com/branimir-barovic-qc6qgo/30min"
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer bg-primary text-black px-7 py-3 rounded-full font-black text-xs tracking-widest uppercase shadow-primary hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black inline-block text-center"
+            className="cursor-pointer bg-primary text-black px-4 md:px-7 py-2 md:py-3 rounded-full font-black text-[10px] md:text-xs tracking-widest uppercase shadow-primary hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black inline-block text-center"
             aria-label="Book a Strategy Call"
           >
-            Book a Strategy Call
+            <span className="hidden sm:inline">Book a </span>Strategy Call
           </a>
         </div>
       </div>

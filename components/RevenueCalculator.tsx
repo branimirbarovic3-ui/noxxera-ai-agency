@@ -99,7 +99,7 @@ III. DATA BREAKDOWN:
 • Deal Value: ${formatCurrency(avgOrderValue)}
 
 IV. SOLUTION: 
-Noxxera AI agents deploy a zero-latency response system that eliminates this leak entirely.
+Noxxera Concierge agents deploy a zero-latency response system that eliminates this leak entirely.
     `.trim();
 
     const payload = {
@@ -329,7 +329,7 @@ Noxxera AI agents deploy a zero-latency response system that eliminates this lea
                   </svg>
                 </div>
                 <p className="text-[#99A1AF] font-medium italic">
-                  "Modern prospects expect immediate responses. If they hit a busy signal, they move to the next competitor. Our AI ensures that never happens."
+                  "Modern prospects expect immediate responses. If they hit a busy signal, they move to the next competitor. Our Concierge service ensures that never happens."
                 </p>
               </div>
             </div>

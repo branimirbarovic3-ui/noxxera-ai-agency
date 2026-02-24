@@ -28,13 +28,13 @@ const VoiceDemo: React.FC = () => {
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-1.5 bg-primary/10 rounded-full text-[10px] font-black tracking-[0.2em] text-primary mb-6 uppercase border border-primary/20">
-            Real-time Infrastructure Preview
+            Real-time Experience Preview
           </div>
           <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase leading-[1.1]">
-            BUILD YOUR <span className="text-primary italic">AI AGENT LIVE</span>.
+            LET OUR <span className="text-primary italic">CONCIERGE CALL YOU</span>.
           </h2>
           <p className="text-lg md:text-xl text-[#99A1AF] font-medium max-w-2xl mx-auto leading-relaxed">
-            Tell us about your business. Our AI will instantly call you acting as your custom voice assistant.
+            Tell us about your business context. Our Voice AI Concierge will instantly call you and simulate a real inquiry.
           </p>
         </div>
 
@@ -113,14 +113,14 @@ const VoiceDemo: React.FC = () => {
                   {isDeploying ? (
                     <>
                       <div className="w-5 h-5 border-3 border-black border-t-transparent rounded-full animate-spin" />
-                      DEPLOYING INFRASTRUCTURE...
+                      CONNECTING CONCIERGE...
                     </>
                   ) : (
-                    "DEPLOY MY AI NOW"
+                    "GET A CALL NOW"
                   )}
                 </button>
                 <p className="text-center text-[10px] font-bold text-[#555] mt-4 uppercase tracking-widest">
-                  Your custom AI voice agent will call you within seconds.
+                  Our custom Voice AI Concierge will call you within seconds.
                 </p>
               </div>
             </form>
@@ -131,8 +131,8 @@ const VoiceDemo: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-3xl font-black text-white uppercase mb-4">Infrastructure Ready</h3>
-              <p className="text-[#99A1AF] font-medium mb-8">Calling {formData.phone} now. Please have your business details ready.</p>
+              <h3 className="text-3xl font-black text-white uppercase mb-4">Concierge Ready</h3>
+              <p className="text-[#99A1AF] font-medium mb-8">Calling {formData.phone} now. Please get ready to speak with our AI.</p>
               <button
                 onClick={() => setIsSuccess(false)}
                 className="text-primary font-black text-xs uppercase tracking-widest hover:underline"

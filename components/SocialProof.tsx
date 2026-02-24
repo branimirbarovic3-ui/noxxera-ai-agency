@@ -30,7 +30,7 @@ const SocialProof: React.FC = () => {
                         ))}
                     </div>
                     <p className="text-lg md:text-2xl font-black italic tracking-tight mb-6 md:mb-8 leading-relaxed">
-                        "Noxxera didn't just provide an AI tool; they deployed a scalable voice infrastructure that handles our entire inbound pipeline. Our lead capture rate increased by 40% in two months."
+                        "Noxxera didn't just provide a concierge, they deployed a scalable voice infrastructure that handles our entire inbound pipeline. Our lead capture rate increased by 40% in two months."
                     </p>
                     <div className="flex items-center gap-4">
                         <img

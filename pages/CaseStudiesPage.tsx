@@ -43,7 +43,7 @@ const CaseStudiesPage: React.FC = () => {
             name: "Nexus Global",
             type: "Global Logistics",
             image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-            metric: "24/7",
+            metric: "Concierge",
             metricLabel: "Operational Uptime",
             desc: "Infrastructure manages urgent dispatch inquiries with zero latency across all time zones.",
         }

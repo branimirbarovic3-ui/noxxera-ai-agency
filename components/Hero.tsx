@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
 
                 <p className={`max-w-2xl mx-auto text-lg md:text-xl text-[#99A1AF] font-medium leading-relaxed mb-12 ${isVisible ? 'animate-fade-in-up delay-300' : 'opacity-0'
                     }`}>
-                    Deploy scalable 24/7 AI voice infrastructure that handles inbound inquiries, outbound lead qualification, and appointment booking with human-level intelligence.
+                    Deploy scalable Concierge voice infrastructure that handles inbound inquiries, outbound lead qualification, and appointment booking with human-level intelligence.
                 </p>
 
                 <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center ${isVisible ? 'animate-fade-in-up delay-400' : 'opacity-0'
@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
                     <a
                         href="/#demo"
                         className="cursor-pointer group relative w-full sm:w-auto overflow-hidden bg-primary text-black px-10 py-5 rounded-full font-black text-lg shadow-primary transition-all duration-300 hover:scale-[1.03] active:scale-95 uppercase tracking-tight focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black inline-block text-center btn-liquid pulse-primary"
-                        aria-label="Access AI Infrastructure"
+                        aria-label="Access Concierge Infrastructure"
                     >
                         <span className="relative z-10">Access Infrastructure</span>
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" aria-hidden="true" />
