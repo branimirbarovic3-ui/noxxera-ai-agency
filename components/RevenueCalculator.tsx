@@ -120,7 +120,7 @@ Noxxera AI agents deploy a zero-latency response system that eliminates this lea
     };
 
     try {
-      const response = await fetch('https://brano1957.app.n8n.cloud/webhook-test/noxxera-calculator', {
+      const response = await fetch('https://brano1957.app.n8n.cloud/webhook/noxxera-calculator', {
         method: 'POST',
         mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
