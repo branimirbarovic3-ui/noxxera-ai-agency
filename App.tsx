@@ -7,6 +7,7 @@ import CaseStudiesPage from './pages/CaseStudiesPage';
 import { DottedSurface } from './components/DottedSurface';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import DemoPage from './pages/DemoPage';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -62,6 +63,19 @@ const AnimatedRoutes = () => {
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
               <CaseStudiesPage />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/demo"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <DemoPage />
             </motion.div>
           }
         />
