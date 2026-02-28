@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 
+const N8N_WEBHOOK = 'https://brano1957.app.n8n.cloud/webhook/noxxera-call';
+
 const VoiceDemo: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -10,15 +12,30 @@ const VoiceDemo: React.FC = () => {
   });
   const [isDeploying, setIsDeploying] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsDeploying(true);
-    // Simulate deployment/API call
-    setTimeout(() => {
-      setIsDeploying(false);
+    setError('');
+
+    try {
+      await fetch(N8N_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          industry: formData.industry,
+          ai_function: formData.function,
+        }),
+      });
       setIsSuccess(true);
-    }, 2000);
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setIsDeploying(false);
+    }
   };
 
   return (
@@ -122,6 +139,9 @@ const VoiceDemo: React.FC = () => {
                 <p className="text-center text-[10px] font-bold text-[#555] mt-4 uppercase tracking-widest">
                   Our custom Voice AI Concierge will call you within seconds.
                 </p>
+                {error && (
+                  <p className="text-center text-red-400 text-xs font-bold mt-3">{error}</p>
+                )}
               </div>
             </form>
           ) : (
