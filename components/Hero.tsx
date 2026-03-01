@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
                     </a>
 
                     <a
-                        href="https://cal.com/branimir-barovic-qc6qgo/30min"
+                        href="https://cal.com/branimir-barovic-qc6qgo/noxxera"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="cursor-pointer w-full sm:w-auto bg-[#1A1A1A] border border-[#282828] text-white px-10 py-5 rounded-full font-black text-lg hover:bg-[#222] hover:border-[#444] transition-all duration-200 uppercase tracking-tight active:scale-95 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black flex items-center justify-center"

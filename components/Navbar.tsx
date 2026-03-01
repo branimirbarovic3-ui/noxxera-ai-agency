@@ -60,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
             Login
           </Link>
           <a
-            href="https://cal.com/branimir-barovic-qc6qgo/30min"
+            href="https://cal.com/branimir-barovic-qc6qgo/noxxera"
             target="_blank"
             rel="noopener noreferrer"
             className="cursor-pointer bg-primary text-black px-4 md:px-7 py-2 md:py-3 rounded-full font-black text-[10px] md:text-xs tracking-widest uppercase shadow-primary hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black inline-block text-center"

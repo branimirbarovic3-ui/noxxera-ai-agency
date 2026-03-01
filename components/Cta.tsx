@@ -34,7 +34,7 @@ const Cta: React.FC = () => {
         <div className={`flex flex-col sm:flex-row items-center justify-center gap-6 w-full ${isVisible ? 'animate-fade-in-up delay-200' : 'opacity-0'
           }`}>
           <a
-            href="https://cal.com/branimir-barovic-qc6qgo/30min"
+            href="https://cal.com/branimir-barovic-qc6qgo/noxxera"
             target="_blank"
             rel="noopener noreferrer"
             className="cursor-pointer group relative w-full sm:w-auto bg-primary text-black px-10 md:px-14 py-5 md:py-7 rounded-full font-black text-xl md:text-3xl shadow-primary hover:scale-[1.05] active:scale-95 transition-all duration-300 uppercase tracking-tighter focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black inline-block text-center"
