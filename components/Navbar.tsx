@@ -50,6 +50,12 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
           >
             Contact
           </a>
+          <Link
+            to="/get-started"
+            className="cursor-pointer hover:text-white transition-colors duration-200 focus:outline-none focus:text-primary focus:underline underline-offset-4"
+          >
+            Platform
+          </Link>
         </div>
 
         <div className="flex items-center gap-4">

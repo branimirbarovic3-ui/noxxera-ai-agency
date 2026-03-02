@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
@@ -72,7 +73,9 @@ const Home: React.FC = () => {
                     <p className="text-[#99A1AF] text-sm">
                         © 2025 Noxxera AI. Pioneering Enterprise Voice Automation.
                     </p>
-                    <nav className="flex gap-6 text-[#99A1AF] text-sm uppercase tracking-widest font-bold" aria-label="Footer navigation">
+                    <nav className="flex flex-wrap justify-center gap-6 text-[#99A1AF] text-sm uppercase tracking-widest font-bold" aria-label="Footer navigation">
+                        <Link to="/get-started" className="cursor-pointer hover:text-primary transition-colors duration-200">Get Started</Link>
+                        <Link to="/case-studies" className="cursor-pointer hover:text-primary transition-colors duration-200">Case Studies</Link>
                         <a href="#privacy" className="cursor-pointer hover:text-primary transition-colors duration-200">Privacy</a>
                         <a href="#terms" className="cursor-pointer hover:text-primary transition-colors duration-200">Terms</a>
                         <a href="https://x.com/noxxeraai" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:text-primary transition-colors duration-200">X</a>

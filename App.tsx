@@ -8,6 +8,7 @@ import { DottedSurface } from './components/DottedSurface';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import DemoPage from './pages/DemoPage';
+import AdsLandingPage from './pages/AdsLandingPage';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -76,6 +77,19 @@ const AnimatedRoutes = () => {
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
               <DemoPage />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/get-started"
+          element={
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <AdsLandingPage />
             </motion.div>
           }
         />
