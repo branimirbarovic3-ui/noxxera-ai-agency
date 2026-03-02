@@ -24,7 +24,7 @@ const AdsLandingPage: React.FC = () => {
                         NOXXERA <span className="text-primary italic">AI</span>
                     </a>
                     <a
-                        href="https://cal.com/branimir-barovic-qc6qgo/noxxera"
+                        href="https://cal.com/noxxera-ai/noxxera"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-primary text-black px-6 py-2.5 rounded-full font-black text-[10px] md:text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-primary"
@@ -151,7 +151,7 @@ const AdsLandingPage: React.FC = () => {
                             <span className="text-primary">EVERY REVENUE STREAM?</span>
                         </h2>
                         <a
-                            href="https://cal.com/branimir-barovic-qc6qgo/noxxera"
+                            href="https://cal.com/noxxera-ai/noxxera"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-block bg-primary text-black px-12 py-6 rounded-full font-black text-xl hover:scale-[1.05] active:scale-95 transition-all shadow-primary uppercase tracking-tight btn-liquid"
