@@ -71,7 +71,7 @@ const Home: React.FC = () => {
                         <span className="text-2xl font-black tracking-tighter text-white">NOXXERA <span className="text-primary">AI</span></span>
                     </div>
                     <p className="text-[#99A1AF] text-sm">
-                        © 2025 Noxxera AI. Pioneering Enterprise Voice Automation.
+                        © 2025 Noxxera AI. Pioneering Business Voice Automation.
                     </p>
                     <nav className="flex flex-wrap justify-center gap-6 text-[#99A1AF] text-sm uppercase tracking-widest font-bold" aria-label="Footer navigation">
                         <Link to="/get-started" className="cursor-pointer hover:text-primary transition-colors duration-200">Get Started</Link>

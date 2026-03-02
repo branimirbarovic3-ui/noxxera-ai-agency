@@ -54,7 +54,7 @@ const CertifiedPartner: React.FC = () => {
     },
     {
       title: "SECURE DATA HANDLING",
-      desc: "Enterprise-grade encryption for all voice data, lead information, and sensitive business logic.",
+      desc: "Military-grade encryption for all voice data, lead information, and sensitive business logic.",
       icon: (
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -115,7 +115,7 @@ const CertifiedPartner: React.FC = () => {
 
             <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase leading-[1.1]">
               Real-Time Automation. <br />
-              <span className="text-primary italic">Enterprise Reliability.</span>
+              <span className="text-primary italic">Unmatched Reliability.</span>
             </h2>
 
             <p className="text-lg md:text-xl text-[#99A1AF] font-medium mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
@@ -205,7 +205,7 @@ const CertifiedPartner: React.FC = () => {
           </div>
         </div>
 
-        {/* New Row: Enterprise Partner Logos */}
+        {/* New Row: Technology Partner Logos */}
         <div className="pt-12 border-t border-[#282828] relative z-20">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
             {/* Label - Fixed */}

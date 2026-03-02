@@ -8,7 +8,7 @@ const Features: React.FC = () => {
   const features = [
     {
       title: "LATENCY-OPTIMIZED ENGINE",
-      description: "Consistent sub-500ms response times. No awkward delays or robotic pauses. Just fluid, natural interaction that maintains human-level standards across all enterprise workflows.",
+      description: "Consistent sub-500ms response times. No awkward delays or robotic pauses. Just fluid, natural interaction that maintains human-level standards across all high-precision workflows.",
       icon: (
         <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -16,7 +16,7 @@ const Features: React.FC = () => {
       )
     },
     {
-      title: "ENTERPRISE ADAPTABILITY",
+      title: "SCALABLE ADAPTABILITY",
       description: "Agents programmed with domain-specific logic. Our infrastructure adapts to any industry, from patient intake in healthcare to lead qualification for high-ticket agencies.",
       icon: (
         <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

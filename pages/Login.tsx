@@ -84,7 +84,7 @@ const Login: React.FC = () => {
                     </h1>
                     <p className="text-[#99A1AF] font-medium">
                         {isLogin
-                            ? 'Access your enterprise dashboard and insights.'
+                            ? 'Access your master dashboard and insights.'
                             : 'Launch your high-performance voice infrastructure.'}
                     </p>
                 </div>

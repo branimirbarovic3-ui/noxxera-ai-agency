@@ -159,7 +159,7 @@ const AdsLandingPage: React.FC = () => {
                             Book Your Strategy Call
                         </a>
                         <p className="mt-8 text-[#555] font-bold uppercase tracking-widest text-[10px]">
-                            Limited availability for Enterprise Q2 Onboarding
+                            Limited availability for Q2 Onboarding
                         </p>
                     </div>
                 </section>
@@ -173,7 +173,7 @@ const AdsLandingPage: React.FC = () => {
                         <a href="#privacy" className="hover:text-primary transition-colors">Privacy</a>
                         <a href="#terms" className="hover:text-primary transition-colors">Terms</a>
                     </nav>
-                    <p className="text-[#333] text-[10px] font-bold uppercase tracking-[0.4em]">© 2025 NOXXERA ENTERPRISE LTD.</p>
+                    <p className="text-[#333] text-[10px] font-bold uppercase tracking-[0.4em]">© 2025 NOXXERA AI SOLUTIONS.</p>
                 </div>
             </footer>
         </div>

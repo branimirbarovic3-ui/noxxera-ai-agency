@@ -96,7 +96,7 @@ const DemoPage: React.FC = () => {
                             />
                             <div className="text-left">
                                 <p className="font-black text-white text-sm">SARAH JENKINS</p>
-                                <p className="text-[#555] text-xs font-bold uppercase tracking-widest">COO @ Vertex Enterprise</p>
+                                <p className="text-[#555] text-xs font-bold uppercase tracking-widest">COO @ Vertex Agency</p>
                             </div>
                         </div>
                     </div>

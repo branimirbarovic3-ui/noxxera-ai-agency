@@ -23,7 +23,7 @@ const Industries: React.FC = () => {
         { name: "Automotive", icon: <Car className="w-6 h-6" />, desc: "Service reminders & sales leads" },
         { name: "E-commerce", icon: <ShoppingBag className="w-6 h-6" />, desc: "Order tracking & support" },
         { name: "Agencies", icon: <Users className="w-6 h-6" />, desc: "White-label AI calling solutions" },
-        { name: "Enterprise", icon: <Globe className="w-6 h-6" />, desc: "Scalable high-concurrency flows" }
+        { name: "Scaling Teams", icon: <Globe className="w-6 h-6" />, desc: "Scalable high-concurrency flows" }
     ];
 
     return (

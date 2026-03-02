@@ -100,7 +100,7 @@ const VoiceDemo: React.FC = () => {
                     <option value="Automotive">Automotive</option>
                     <option value="E-commerce">E-commerce</option>
                     <option value="Agencies">Agencies</option>
-                    <option value="Enterprise">Enterprise</option>
+                    <option value="Startups">Startups</option>
                   </select>
                 </div>
                 <div className="space-y-2">

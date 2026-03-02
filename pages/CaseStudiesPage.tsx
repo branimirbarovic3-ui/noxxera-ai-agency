@@ -17,7 +17,7 @@ const CaseStudiesPage: React.FC = () => {
     const cases = [
         {
             name: "CloudScale SaaS",
-            type: "Enterprise Software",
+            type: "Business Automation",
             image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
             metric: "+40%",
             metricLabel: "Lead Capture Rate",

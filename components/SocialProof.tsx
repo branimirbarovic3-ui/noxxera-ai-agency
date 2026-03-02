@@ -40,7 +40,7 @@ const SocialProof: React.FC = () => {
                         />
                         <div>
                             <p className="font-black text-lg">SARAH JENKINS</p>
-                            <p className="font-bold text-sm uppercase opacity-70 tracking-widest">COO @ Vertex Enterprise</p>
+                            <p className="font-bold text-sm uppercase opacity-70 tracking-widest">COO @ Vertex Agency</p>
                         </div>
                     </div>
                 </div>
