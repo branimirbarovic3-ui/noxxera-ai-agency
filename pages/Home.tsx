@@ -74,7 +74,6 @@ const Home: React.FC = () => {
                         © 2025 Noxxera AI. Pioneering Business Voice Automation.
                     </p>
                     <nav className="flex flex-wrap justify-center gap-6 text-[#99A1AF] text-sm uppercase tracking-widest font-bold" aria-label="Footer navigation">
-                        <Link to="/get-started" className="cursor-pointer hover:text-primary transition-colors duration-200">Get Started</Link>
                         <Link to="/case-studies" className="cursor-pointer hover:text-primary transition-colors duration-200">Case Studies</Link>
                         <a href="#privacy" className="cursor-pointer hover:text-primary transition-colors duration-200">Privacy</a>
                         <a href="#terms" className="cursor-pointer hover:text-primary transition-colors duration-200">Terms</a>
