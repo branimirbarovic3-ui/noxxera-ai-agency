@@ -145,19 +145,31 @@ const VoiceDemo: React.FC = () => {
               </div>
             </form>
           ) : (
-            <div className="text-center py-12 animate-fade-in">
-              <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
+            <div className="text-center py-16 animate-fade-in relative z-20">
+              <div className="relative w-24 h-24 mx-auto mb-10">
+                <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-20" />
+                <div className="relative w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center border-2 border-primary/30">
+                  <svg className="w-12 h-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
               </div>
-              <h3 className="text-3xl font-black text-white uppercase mb-4">Concierge Ready</h3>
-              <p className="text-[#99A1AF] font-medium mb-8">Calling {formData.phone} now. Please get ready to speak with our AI.</p>
+              <h3 className="text-3xl md:text-5xl font-black text-white uppercase mb-6 tracking-tighter leading-none">
+                CONCIERGE <span className="text-primary italic">DEPLOYED.</span>
+              </h3>
+              <div className="space-y-4 mb-12">
+                <p className="text-xl md:text-2xl text-primary font-black italic uppercase tracking-wider">
+                  STAY NEAR YOUR PHONE.
+                </p>
+                <p className="text-[#99A1AF] font-bold text-lg max-w-sm mx-auto leading-relaxed">
+                  Our system is dialing you now. This will take just a few seconds.
+                </p>
+              </div>
               <button
                 onClick={() => setIsSuccess(false)}
-                className="text-primary font-black text-xs uppercase tracking-widest hover:underline"
+                className="text-[#555] font-black text-[10px] uppercase tracking-[0.4em] hover:text-white transition-all"
               >
-                Test another configuration
+                ← Test another configuration
               </button>
             </div>
           )}
