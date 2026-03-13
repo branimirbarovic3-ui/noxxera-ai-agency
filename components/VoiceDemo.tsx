@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 const N8N_WEBHOOK = 'https://brano1957.app.n8n.cloud/webhook/noxxera-call';
@@ -20,9 +19,11 @@ const VoiceDemo: React.FC = () => {
     setError('');
 
     try {
-      await fetch(N8N_WEBHOOK, {
+      const response = await fetch(N8N_WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
@@ -30,9 +31,28 @@ const VoiceDemo: React.FC = () => {
           ai_function: formData.function,
         }),
       });
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+
+      // Check if response is OK (status 200-299)
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`Server responded with ${response.status}: ${errorText}`);
+      }
+
+      const responseData = await response.json();
+      console.log('Success response:', responseData);
+
       setIsSuccess(true);
     } catch (err) {
-      setError('Something went wrong. Please try again.');
+      console.error('Full error:', err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please try again.'
+      );
     } finally {
       setIsDeploying(false);
     }
