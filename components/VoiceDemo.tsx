@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const N8N_WEBHOOK = 'https://brano1957.app.n8n.cloud/webhook/noxxera-call';
+const N8N_WEBHOOK = 'https://brano1957.app.n8n.cloud/webhook/noxxera-demo-call';
 
 const VoiceDemo: React.FC = () => {
   const [formData, setFormData] = useState({
